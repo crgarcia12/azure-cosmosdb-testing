@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("MyApplication.UnitTests")]
+
 namespace MyApplication
 {
     public class Startup

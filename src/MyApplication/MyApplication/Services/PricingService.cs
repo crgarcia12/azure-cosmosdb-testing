@@ -44,8 +44,7 @@ namespace MyApplication
 
             return products;
         }
-
-        private double CalculateDiscount(double price, int quantity)
+        internal double CalculateDiscount(double price, int quantity)
         {
             if(quantity > 10)
             {
