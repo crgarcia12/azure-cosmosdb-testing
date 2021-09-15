@@ -27,10 +27,5 @@ namespace MyApplicationIntegrationTests
             };
             return new CosmosClient(EndpointUrl, AuthorizationKey, cosmosClientOptions);
         }
-
-        public static void InsertIntoDb(string item)
-        {
-
-        }
     }
 }

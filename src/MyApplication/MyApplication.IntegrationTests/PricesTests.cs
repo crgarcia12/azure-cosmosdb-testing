@@ -51,8 +51,27 @@ namespace MyApplicationIntegrationTests
 
             // Assert
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-            Assert.Equal(product.Price, 0.48);
+            Assert.Equal(product.price, 0.48);
+        }
 
+        [Fact]
+        public async Task TestPriceCalculationCanHandleCeroPrice()
+        {
+            // Arrange
+
+            // Action
+            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductCero");
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
+
+            // Assert
+            Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.Equal(product.price, 0);
         }
     }
 }

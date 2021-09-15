@@ -9,6 +9,7 @@ namespace MyApplication.Data
     {
         public static string DbName = "PricesDb";
         public static string ContainerName = "PricesContainer";
+        public static string PartitionKeyPath = "/name";
 
     }
 }

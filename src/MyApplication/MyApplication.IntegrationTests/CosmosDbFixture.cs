@@ -6,11 +6,8 @@ using MyApplication;
 using MyApplication.Data;
 using MyApplication.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MyApplicationIntegrationTests
 {
@@ -26,24 +23,31 @@ namespace MyApplicationIntegrationTests
             ContainerProperties containerProperties = new ContainerProperties() 
             {
                 Id = CosmosDbContext.ContainerName,
-                PartitionKeyPath = "/Name"
+                PartitionKeyPath = CosmosDbContext.PartitionKeyPath
             };
             Container container = database.CreateContainerIfNotExistsAsync(containerProperties).Result;
 
             var p1 = new Product()
             {
                 id = Guid.NewGuid(),
-                Name = "ProductOne",
-                Price = 8
+                name = "ProductOne",
+                price = 8
             };
             var p2 = new Product()
             {
                 id = Guid.NewGuid(),
-                Name = "ProductTwo",
-                Price = 12
+                name = "ProductTwo",
+                price = 12
+            };
+            var p3 = new Product()
+            {
+                id = Guid.NewGuid(),
+                name = "ProductCero",
+                price = 0
             };
             container.CreateItemAsync(p1).Wait();
             container.CreateItemAsync(p2).Wait();
+            container.CreateItemAsync(p3).Wait();
         }
 
         private void CleanDummyData(CosmosClient cosmosClient)
