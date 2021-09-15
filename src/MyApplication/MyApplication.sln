@@ -7,7 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication", "MyApplicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication.UnitTests", "MyApplication.UnitTests\MyApplication.UnitTests.csproj", "{9A95006E-535A-49A7-A1AD-DBE7457CB284}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplication.IntegrationTests", "MyApplication.IntegrationTests\MyApplication.IntegrationTests.csproj", "{DE8A1EAB-977F-4D4B-963E-DBF55DDC61A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApplicationIntegrationTests", "MyApplication.IntegrationTests\MyApplicationIntegrationTests.csproj", "{DE8A1EAB-977F-4D4B-963E-DBF55DDC61A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BC9D267D-C585-41B5-9906-8FBACFADA4D9} = {BC9D267D-C585-41B5-9906-8FBACFADA4D9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
