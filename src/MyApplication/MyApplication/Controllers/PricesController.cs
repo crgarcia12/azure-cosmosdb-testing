@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
+using MyApplication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,18 @@ namespace MyApplication.Controllers
     {
         private CosmosClient cosmosClient;
 
-        PricesController(CosmosClient client)
+        public PricesController(CosmosClient client)
         {
             this.cosmosClient = client;
         }
 
         // GET: api/<PricesController>
         [HttpGet]
-        public string Get()
+        public async Task<string> Get()
         {
             var PricingService = new PricingService();
 
-            return "Price: " + PricingService.GetPrice("whocares", this.cosmosClient);
+            return "Price: " + await PricingService.GetPrice("ProductOne", this.cosmosClient);
         }
 
         // GET api/<PricesController>/5

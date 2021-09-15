@@ -14,22 +14,23 @@ namespace MyApplicationIntegrationTests
 {
     public class IntegrationTestBase
     {
-        protected readonly HttpClient httpClient;
+        protected readonly HttpClient testHttpClient;
+        internal CosmosClient cosmosClient;
 
         public IntegrationTestBase()
         {
+            cosmosClient = CosmosDbService.GetCosmosClient("https://localhost:8081/", "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==");
             var appFactory = new WebApplicationFactory<Startup>()
                 .WithWebHostBuilder(builder =>{
                     builder.ConfigureServices(services =>
                     {
-                        services.RemoveAll(typeof(CosmosClient));
-
                         // CosmosDb emulator has hardcoded credentials since it is only supported for local development
-                        services.AddSingleton(CosmosDbService.GetCosmosClient("https://localhost:8081/", "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="));
+                        services.RemoveAll(typeof(CosmosClient));
+                        services.AddSingleton(cosmosClient);
                     });
                 });
 
-            this.httpClient = appFactory.CreateClient();
+            this.testHttpClient = appFactory.CreateClient();
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyApplication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,12 @@ namespace MyApplication
         public void ConfigureServices(IServiceCollection services)
         {
             // Cosmos DB Service
-            
+            string cosmosDbEndpointUrl = Configuration["CosmosDb:EndpointUrl"];
+            string cosmosDbAuthorizationKey = Configuration["CosmosDb:AuthorizationKey"];
+            var cosmosClient = new CosmosClient(cosmosDbEndpointUrl, cosmosDbAuthorizationKey);
+
+            services.AddSingleton(typeof(CosmosClient), cosmosClient);
             services.AddControllers();
-
-            string connStr = Configuration["CosmosDb:ConnectionString"];
-            var cosmosClient = new CosmosClient(connStr);
-            services.AddSingleton(cosmosClient);
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApplication", Version = "v1" });

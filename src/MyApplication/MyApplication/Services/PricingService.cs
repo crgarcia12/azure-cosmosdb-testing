@@ -11,7 +11,7 @@ namespace MyApplication
     {
         public async Task<double> GetPrice(string productName, CosmosClient client)
         {
-            var query = $"SELECT * FROM c WHERE c.Name = '${productName}'";
+            var query = $"SELECT * FROM c WHERE c.Name = '{productName}'";
             Container container = client.GetContainer("pricesdb", "productPrices");
 
 

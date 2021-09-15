@@ -16,10 +16,11 @@ namespace MyApplicationIntegrationTests
             // Arrange
 
             // Action
+            var response = await this.testHttpClient.GetAsync("/api/Prices");
 
             // Assert
+            Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
 
-            // Clean
         }
     }
 }
