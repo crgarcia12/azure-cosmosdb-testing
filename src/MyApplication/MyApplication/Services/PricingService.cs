@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using MyApplication.Data;
 using MyApplication.Model;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,17 @@ namespace MyApplication
 {
     public class PricingService
     {
-        public async Task<double> GetPrice(string productName, CosmosClient client)
+        public async Task<Product> GetPriceAsync(string productName, CosmosClient client)
         {
-            var query = $"SELECT * FROM c WHERE c.Name = '{productName}'";
-            Container container = client.GetContainer("pricesdb", "productPrices");
-
+            var query = $"SELECT * FROM p WHERE p.Name = '{productName}'";
+            Container container = client.GetContainer(CosmosDbContext.DbName, CosmosDbContext.ContainerName);
 
             QueryDefinition queryDefinition = new QueryDefinition(query);
             FeedIterator<Product> queryResultSetIterator = container.GetItemQueryIterator<Product>(queryDefinition);
 
             Product product = (await queryResultSetIterator.ReadNextAsync()).First();
-
-            return CalculateDiscount(product.Price, 12);
+            product.Price = CalculateDiscount(product.Price, 12);
+            return product;
         }
 
         private double CalculateDiscount(double price, int quantity)
