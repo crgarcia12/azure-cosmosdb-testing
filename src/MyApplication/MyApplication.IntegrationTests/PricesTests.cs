@@ -51,7 +51,7 @@ namespace MyApplicationIntegrationTests
 
             // Assert
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-            Assert.Equal(product.price, 0.48);
+            Assert.InRange(product.price, 0.07, 0.075);
         }
 
         [Fact]
