@@ -18,9 +18,9 @@ namespace MyApplication.UnitTests
         public void PricingService_CalculateDiscount_CanHandleCeroPrice()
         {
             PricingService ps = new PricingService();
-            double price = ps.CalculateDiscount(0, 12);
+            double price = ps.CalculateDiscount(1, 9);
 
-            Assert.AreEqual(price, double.NaN);
+            Assert.AreEqual(price, 1);
         }
 
         [TestMethod]

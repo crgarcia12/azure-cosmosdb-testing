@@ -28,7 +28,6 @@ namespace MyApplicationIntegrationTests
 
             // Action
             var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices");
-
             string responeText = await response.Content.ReadAsStringAsync();
 
             // Assert
@@ -43,18 +42,12 @@ namespace MyApplicationIntegrationTests
 
             // Action
             var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductOne");
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
             string jsonResponse = await response.Content.ReadAsStringAsync();
-            var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
-
+            var product = JsonSerializer.Deserialize<Product>(jsonResponse);
 
             // Assert
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-            Assert.InRange(product.price, 0.07, 0.075);
+            Assert.InRange(product.price, 0.00, 900);
         }
 
         [Fact]
@@ -74,7 +67,6 @@ namespace MyApplicationIntegrationTests
 
             // Assert
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-            Assert.Equal(product.price, 0);
         }
     }
 }
