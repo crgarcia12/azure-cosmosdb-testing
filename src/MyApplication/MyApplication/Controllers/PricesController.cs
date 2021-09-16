@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
 using MyApplication.Model;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,8 +33,16 @@ namespace MyApplication.Controllers
         [HttpGet("{name}")]
         public async Task<Product> Get(string name)
         {
-            var pricingService = new PricingService();
-            return await pricingService.GetPriceAsync(name, this.cosmosClient); ;
+            try
+            {
+                var pricingService = new PricingService();
+                return await pricingService.GetPriceAsync(name, this.cosmosClient);
+            }
+            catch(Exception ex)
+            {
+                Debugger.Log(0, "EXCEPTIONS", ex.Message);
+                throw;
+            }
         }
 
         // POST api/<PricesController>
