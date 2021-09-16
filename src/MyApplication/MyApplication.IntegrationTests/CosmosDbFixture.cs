@@ -8,14 +8,12 @@ using MyApplication.Model;
 using System;
 using System.Net.Http;
 
-
 namespace MyApplicationIntegrationTests
 {
     public class CosmosDbFixture: IDisposable
     {
         public HttpClient TestHttpClient { get; private set; }
         internal CosmosClient CosmosClient { get; private set; }
-
         private void InsertDummyData(CosmosClient cosmosClient)
         {
             Database database = cosmosClient.CreateDatabaseIfNotExistsAsync(CosmosDbContext.DbName).Result;
@@ -49,17 +47,14 @@ namespace MyApplicationIntegrationTests
             container.CreateItemAsync(p2).Wait();
             container.CreateItemAsync(p3).Wait();
         }
-
         private void CleanDummyData(CosmosClient cosmosClient)
         {
             cosmosClient.GetDatabase(CosmosDbContext.DbName).DeleteAsync();
         }
-
         public void Dispose()
         {
             CleanDummyData(this.CosmosClient);
         }
-
         public CosmosDbFixture()
         {
             this.CosmosClient = CosmosDbService.GetCosmosClient("https://localhost:8081/", "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==");
