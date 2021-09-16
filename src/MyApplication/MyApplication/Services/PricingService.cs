@@ -49,7 +49,7 @@ namespace MyApplication
         {
             if(quantity > 10)
             {
-                return price * 0.8 / (quantity * 0.9 * price);
+                return price * 0.8;
             }
             return price;
         }

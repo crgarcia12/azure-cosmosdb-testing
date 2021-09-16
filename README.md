@@ -26,8 +26,8 @@ Create the DB in WSL2
  -e AZURE_COSMOS_EMULATOR_IP_ADDRESS_OVERRIDE=$ipaddr `
  -it `
  mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
-
 ```
+
 Kill the DB in WSL2
 ```
   docker kill test-linux-emulator; docker rm test-linux-emulator
