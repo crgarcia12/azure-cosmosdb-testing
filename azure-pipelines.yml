@@ -12,28 +12,38 @@ pool:
 variables:
   buildConfiguration: 'Debug'
 
-steps:
-- script: | 
-    docker run -p 8081:8081 \
-    -p 10251:10251 -p 10252:10252 -p 10253:10253 -p 10254:10254  \
-    -m 3g \
-    --cpus=2.0 \
-    --name=test-linux-emulator \
-    -e AZURE_COSMOS_EMULATOR_PARTITION_COUNT=1 \
-    -e AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true \
-    -d \
-    mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
+stages:
+  - stage: UnitTest
+    jobs:
+      - job: UnitTest MyApplication
+        steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'test'
+            projects: 'src/MyApplication/MyApplication.UnitTests/MyApplication.UnitTests.csproj'
+            testRunTitle: 'Unit Tests'
+            arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: 'src/MyApplication/MyApplication.UnitTests/MyApplication.UnitTests.csproj'
-    testRunTitle: 'Unit Tests'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+  - stage: Integration test
+    jobs:
+      - job: Create CosmosDb container
+        steps:
+        - script: | 
+            docker run -p 8081:8081 \
+            -p 10251:10251 -p 10252:10252 -p 10253:10253 -p 10254:10254  \
+            -m 3g \
+            --cpus=2.0 \
+            --name=test-linux-emulator \
+            -e AZURE_COSMOS_EMULATOR_PARTITION_COUNT=1 \
+            -e AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true \
+            -d \
+            mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: 'src/MyApplication/MyApplication.IntegrationTests/MyApplicationIntegrationTests.csproj'
-    testRunTitle: 'Integration Tests'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+      - job: Run Integration tests
+        steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'test'
+            projects: 'src/MyApplication/MyApplication.IntegrationTests/MyApplicationIntegrationTests.csproj'
+            testRunTitle: 'Integration Tests'
+            arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
