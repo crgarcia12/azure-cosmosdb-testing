@@ -15,7 +15,7 @@ variables:
 stages:
   - stage: Unit_Test
     jobs:
-      - job: UnitTest_MyApplication
+      - job: Run_Unit_Tests
         steps:
         - task: DotNetCoreCLI@2
           inputs:
@@ -39,7 +39,8 @@ stages:
             -d \
             mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
 
-      - job: Run_Integration_tests
+      - job: Run_Integration_Tests
+        dependsOn: Create_CosmosDb_Container
         steps:
         - task: DotNetCoreCLI@2
           inputs:
