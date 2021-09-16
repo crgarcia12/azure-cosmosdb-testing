@@ -39,45 +39,45 @@ namespace MyApplicationIntegrationTests
 
         }
 
-        //[Fact]
-        //public async Task PriceCalculation_MakesADiscount()
-        //{
-        //    // Arrange
+        [Fact]
+        public async Task PriceCalculation_MakesADiscount()
+        {
+            // Arrange
 
-        //    // Action
-        //    var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductOne");
+            // Action
+            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductOne");
 
-        //    var options = new JsonSerializerOptions
-        //    {
-        //        PropertyNameCaseInsensitive = true
-        //    };
-        //    string jsonResponse = await response.Content.ReadAsStringAsync();
-        //    var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
 
 
-        //    // Assert
-        //    Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-        //    Assert.InRange(product.price, 0.07, 0.075);
-        //}
+            // Assert
+            Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.InRange(product.price, 0.07, 0.075);
+        }
 
-        //[Fact]
-        //public async Task PriceCalculation_CanHandleCeroPrice()
-        //{
-        //    // Arrange
+        [Fact]
+        public async Task PriceCalculation_CanHandleCeroPrice()
+        {
+            // Arrange
 
-        //    // Action
-        //    var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductCero");
+            // Action
+            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductCero");
 
-        //    var options = new JsonSerializerOptions
-        //    {
-        //        PropertyNameCaseInsensitive = true
-        //    };
-        //    string jsonResponse = await response.Content.ReadAsStringAsync();
-        //    var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
 
-        //    // Assert
-        //    Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
-        //    Assert.Equal(product.price, 0);
-        //}
+            // Assert
+            Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.Equal(product.price, 0);
+        }
     }
 }
