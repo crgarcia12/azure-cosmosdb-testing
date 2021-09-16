@@ -20,7 +20,7 @@ namespace MyApplication.UnitTests
             PricingService ps = new PricingService();
             double price = ps.CalculateDiscount(0, 12);
 
-            Assert.AreEqual(price, 0);
+            Assert.AreEqual(price, double.NaN);
         }
 
         [TestMethod]

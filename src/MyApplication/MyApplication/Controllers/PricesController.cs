@@ -33,16 +33,8 @@ namespace MyApplication.Controllers
         [HttpGet("{name}")]
         public async Task<Product> Get(string name)
         {
-            try
-            {
-                var pricingService = new PricingService();
-                return await pricingService.GetPriceAsync(name, this.cosmosClient);
-            }
-            catch(Exception ex)
-            {
-                Debugger.Log(0, "EXCEPTIONS", ex.Message);
-                throw;
-            }
+            var pricingService = new PricingService();
+            return await pricingService.GetPriceAsync(name, this.cosmosClient);
         }
 
         // POST api/<PricesController>

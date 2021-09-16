@@ -31,9 +31,6 @@ namespace MyApplicationIntegrationTests
 
             string responeText = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine(responeText);
-            Debugger.Log(1,"testlog", (responeText));
-
             // Assert
             Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
 
