@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
+using System;
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("MyApplication.UnitTests")]
 
@@ -29,8 +29,6 @@ namespace MyApplication
             string cosmosDbAuthorizationKey = Configuration["CosmosDb:AuthorizationKey"];
             var cosmosClient = new CosmosClient(cosmosDbEndpointUrl, cosmosDbAuthorizationKey);
             services.AddSingleton(typeof(CosmosClient), cosmosClient);
-
-
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
