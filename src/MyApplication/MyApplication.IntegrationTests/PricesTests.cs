@@ -21,7 +21,7 @@ namespace MyApplicationIntegrationTests
         }
 
         [Fact]
-        public async Task TestPriceCalculationReturns200()
+        public async Task PriceCalculation_Returns200()
         {
             // Arrange
 
@@ -34,7 +34,7 @@ namespace MyApplicationIntegrationTests
         }
 
         [Fact]
-        public async Task TestPriceCalculationMakesADiscount()
+        public async Task PriceCalculation_MakesADiscount()
         {
             // Arrange
 
@@ -55,7 +55,7 @@ namespace MyApplicationIntegrationTests
         }
 
         [Fact]
-        public async Task TestPriceCalculationCanHandleCeroPrice()
+        public async Task PriceCalculation_CanHandleCeroPrice()
         {
             // Arrange
 
