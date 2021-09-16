@@ -23,3 +23,6 @@ Kill the DB in WSL2
 ```
   docker kill test-linux-emulator; docker rm test-linux-emulator
 ```
+
+Open the Cosmos Data explorer
+https://localhost:8081/_explorer/index.html

@@ -21,7 +21,7 @@ steps:
     --name=test-linux-emulator \
     -e AZURE_COSMOS_EMULATOR_PARTITION_COUNT=1 \
     -e AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true \
-    -it mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
+    mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
 
 - task: DotNetCoreCLI@2
   inputs:

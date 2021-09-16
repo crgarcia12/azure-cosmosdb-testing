@@ -28,8 +28,10 @@ namespace MyApplication
             string cosmosDbEndpointUrl = Configuration["CosmosDb:EndpointUrl"];
             string cosmosDbAuthorizationKey = Configuration["CosmosDb:AuthorizationKey"];
             var cosmosClient = new CosmosClient(cosmosDbEndpointUrl, cosmosDbAuthorizationKey);
-
             services.AddSingleton(typeof(CosmosClient), cosmosClient);
+
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
