@@ -14,6 +14,7 @@ variables:
 
 stages:
   - stage: Unit_Test
+    dependsOn: []
     jobs:
       - job: Run_Unit_Tests
         steps:
@@ -25,8 +26,9 @@ stages:
             arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
   - stage: Integration_Tests
+    dependsOn: []
     jobs:
-      - job: Create_CosmosDb_Container
+      - job: Run_Integration_Tests
         steps:
         - script: | 
             docker run -p 8081:8081 \
@@ -39,9 +41,6 @@ stages:
             -d \
             mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
 
-      - job: Run_Integration_Tests
-        dependsOn: Create_CosmosDb_Container
-        steps:
         - task: DotNetCoreCLI@2
           inputs:
             command: 'test'
