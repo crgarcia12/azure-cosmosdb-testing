@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Debug'
 
 steps:
 - script: | 
@@ -27,11 +27,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: 'src/MyApplication/MyApplication.UnitTest/MyApplicationIntegrationTests.csproj'
+    projects: 'src\MyApplication\MyApplication.UnitTests/MyApplication.UnitTests.csproj'
     testRunTitle: 'Unit Tests'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: 'src/MyApplication/MyApplication.IntegrationTests/MyApplicationIntegrationTests.csproj'
     testRunTitle: 'Integration Tests'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
