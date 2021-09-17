@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/crgarcia/azure-cosmosdb-testing/_apis/build/status/crgarcia12.azure-cosmosdb-testing?branchName=main)](https://dev.azure.com/crgarcia/azure-cosmosdb-testing/_build/latest?definitionId=45&branchName=main)
+
 # azure-cosmosdb-testing
 How to test cosmosDB? let's play a bit
 
