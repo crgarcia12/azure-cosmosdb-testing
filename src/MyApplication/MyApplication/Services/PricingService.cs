@@ -10,22 +10,25 @@ namespace MyApplication
 {
     public class PricingService
     {
-        public async Task<Product> GetPriceAsync(string productName, CosmosClient client)
+        public async Task<int> GetProductCountAsync(CosmosClient client)
         {
-            var query = $"SELECT * FROM p WHERE p.name = '{productName}'";
+            var query = $"SELECT VALUE COUNT(1) FROM c";
             Container container = client.GetContainer(CosmosDbContext.DbName, CosmosDbContext.ContainerName);
 
             QueryDefinition queryDefinition = new QueryDefinition(query);
-            FeedIterator<Product> queryResultSetIterator = container.GetItemQueryIterator<Product>(queryDefinition);
+            FeedIterator<int> queryResultSetIterator = container.GetItemQueryIterator<int>(queryDefinition);
 
-            Product product = (await queryResultSetIterator.ReadNextAsync()).First();
-            product.price = CalculateDiscount(product.price, 12);
-            return product;
+            while (queryResultSetIterator.HasMoreResults)
+            {
+                FeedResponse<int> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                return currentResultSet.First();
+            }
+            throw new Exception("No data to count?");
         }
 
-        public async Task<List<Product>> GetPricesAsync(CosmosClient client)
+        public async Task<Product> GetPriceAsync(string productName, CosmosClient client)
         {
-            var query = $"SELECT * FROM p";
+            var query = $"SELECT * FROM p WHERE p.name = '{productName}'";
             Container container = client.GetContainer(CosmosDbContext.DbName, CosmosDbContext.ContainerName);
 
             QueryDefinition queryDefinition = new QueryDefinition(query);
@@ -36,13 +39,14 @@ namespace MyApplication
             while (queryResultSetIterator.HasMoreResults)
             {
                 FeedResponse<Product> currentResultSet = await queryResultSetIterator.ReadNextAsync();
-                foreach (Product family in currentResultSet)
+                foreach (Product product in currentResultSet)
                 {
-                    products.Add(family);
+                    product.price = CalculateDiscount(product.price, 12);
+                    products.Add(product);
                 }
             }
 
-            return products;
+            return products.First();
         }
 
         internal double CalculateDiscount(double price, int quantity)

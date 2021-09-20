@@ -12,6 +12,7 @@ using Xunit;
 
 namespace MyApplicationIntegrationTests
 {
+    [Collection("CosmosDbCollection")]
     public class PricesTests: IClassFixture<CosmosDbFixture>
     {
         private CosmosDbFixture cosmosDbFixture;
@@ -41,7 +42,7 @@ namespace MyApplicationIntegrationTests
             // Arrange
 
             // Action
-            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductOne");
+            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/Product20");
             string jsonResponse = await response.Content.ReadAsStringAsync();
             var product = JsonSerializer.Deserialize<Product>(jsonResponse);
 
@@ -54,9 +55,10 @@ namespace MyApplicationIntegrationTests
         public async Task PriceCalculation_CanHandleCeroPrice()
         {
             // Arrange
+            string productName = "Product1";
 
             // Action
-            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/ProductCero");
+            HttpResponseMessage response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/" + productName);
 
             var options = new JsonSerializerOptions
             {
@@ -66,7 +68,21 @@ namespace MyApplicationIntegrationTests
             var product = JsonSerializer.Deserialize<Product>(jsonResponse, options);
 
             // Assert
-            Assert.Equal(response.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(productName, product.name);
+        }
+
+        [Fact]
+        public async Task TestTotalCountOfProductsInTestDatabase()
+        {
+            HttpResponseMessage response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices");
+
+            string returnMessage = await response.Content.ReadAsStringAsync();
+            int countOfRecordsInDb = Int32.Parse(returnMessage);
+
+            Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(CosmosDbService.TestDatabaseDocumentsCount, countOfRecordsInDb);
+
         }
     }
 }
