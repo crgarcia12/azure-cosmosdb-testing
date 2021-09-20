@@ -51,7 +51,7 @@ namespace MyApplicationIntegrationTests
         private static async Task<Product[]> LoadProductsFromJson()
         {
             Product[] products;
-            using (var sr = new StreamReader("TestData/CosmosDbData.json"))
+            using (var sr = new StreamReader("TestData/CosmosDbDataLong.json"))
             {
                 // Read the stream as a string, and write the string to the console.
                 products = await JsonSerializer.DeserializeAsync<Product[]>(sr.BaseStream);

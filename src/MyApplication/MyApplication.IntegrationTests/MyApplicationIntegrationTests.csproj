@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\CosmosDbData - Copy.json">
+    <None Update="TestData\CosmosDbDataLong.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\CosmosDbData.json">
