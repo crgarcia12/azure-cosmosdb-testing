@@ -23,10 +23,10 @@ namespace MyApplication.Controllers
 
         // GET: api/<PricesController>
         [HttpGet]
-        public async Task<List<Product>> Get()
+        public async Task<int> Get()
         {
             var pricingService = new PricingService();
-            return await pricingService.GetPricesAsync(this.cosmosClient);
+            return await pricingService.GetProductCountAsync(this.cosmosClient);
         }
 
         // GET api/<PricesController>/5
