@@ -42,7 +42,7 @@ namespace MyApplicationIntegrationTests
             // Arrange
 
             // Action
-            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/Product1");
+            var response = await this.cosmosDbFixture.TestHttpClient.GetAsync("/api/Prices/Product20");
             string jsonResponse = await response.Content.ReadAsStringAsync();
             var product = JsonSerializer.Deserialize<Product>(jsonResponse);
 
